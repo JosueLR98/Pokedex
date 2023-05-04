@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../components/pokedex/Header";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -17,13 +17,12 @@ const Pokedex = () => {
   //?Pagina actual
   const [currentPage, setCurentPage] = useState(1);
   //?Estado global donde se almacena el nombre del ususrio
+  const input = useRef(null);
   const nameTrainer = useSelector((store) => store.nameTrainer);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setPokemonName(e.target.pokemonName.value);
   };
-
   const pokemonsByName = pokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(pokemonName.toLowerCase())
   );
@@ -33,11 +32,9 @@ const Pokedex = () => {
     //Pokemons que se van a mostrar en la pagina actual
     const sliceStart = (currentPage - 1) * POKEMONS_PER_PAGE;
     const sliceEnd = sliceStart + POKEMONS_PER_PAGE;
-
     const pokemonInPage = pokemonsByName.slice(sliceStart, sliceEnd);
     //Ultima pagona
     const lastPage = Math.ceil(pokemonsByName.length / POKEMONS_PER_PAGE) || 1;
-
     //Bloque actual
     const PAGES_PER_BLOCK = 5;
     const actualBlock = Math.ceil(currentPage / PAGES_PER_BLOCK);
@@ -45,7 +42,6 @@ const Pokedex = () => {
     const pagesInBlock = [];
     const minPage = (actualBlock - 1) * PAGES_PER_BLOCK + 1;
     const maxPage = actualBlock * PAGES_PER_BLOCK;
-
     for (let i = minPage; i <= maxPage; i++) {
       if (i <= lastPage) {
         pagesInBlock.push(i);
@@ -66,7 +62,6 @@ const Pokedex = () => {
       setCurentPage(newCurrentPage);
     }
   };
-
   useEffect(() => {
     if (!currentType) {
       const URL = "https://pokeapi.co/api/v2/pokemon?limit=1281";
@@ -76,10 +71,8 @@ const Pokedex = () => {
         .catch((err) => console.log(err));
     }
   }, [currentType]);
-
   useEffect(() => {
     const URL = "https://pokeapi.co/api/v2/type";
-
     axios
       .get(URL)
       .then((res) => {
@@ -87,7 +80,6 @@ const Pokedex = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-
   useEffect(() => {
     if (currentType) {
       const URL = `https://pokeapi.co/api/v2/type/${currentType}/`;
@@ -105,7 +97,10 @@ const Pokedex = () => {
   useEffect(() => {
     setCurentPage(1);
   }, [pokemonName, currentType]);
-
+  useEffect(() => {
+    setPokemonName("");
+    input.current.value = "";
+  }, [currentType]);
   return (
     <section className="min-h-screen ">
       <Header />
@@ -114,12 +109,10 @@ const Pokedex = () => {
           <p className="text-red-500 flex">Welcome </p> {nameTrainer}, here you
           can find your favorite pokemon
         </h3>
-        <form
-          onSubmit={handleSubmit}
-          className=" flex gap-1"
-        >
+        <form onSubmit={handleSubmit} className=" flex gap-1">
           <div className="shadow-md shadow-gray-400 flex ">
             <input
+              ref={input}
               id="pokemonName"
               type="text"
               placeholder=" Search your pokemon "

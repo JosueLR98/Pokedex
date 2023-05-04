@@ -38,7 +38,7 @@ const PokemonId = () => {
   }, []);
 
   const getPercentStatBar = (base_stat) => {
-    const PercentStatBar = Math.round((base_stat * 100) / 255);
+    const PercentStatBar = Math.round((base_stat * 200) / 255);
     return `${PercentStatBar}%`;
   };
   return (
@@ -49,7 +49,7 @@ const PokemonId = () => {
           {/* Seccion superior */}
           <section className={` bg-gradient-to-b ${backgroundByType[pokemon?.types[0].type.name]} relative h-[150px] `}>
             <div className="absolute w-[200px] mx-auto left-1/2 -translate-x-1/2 -top-14">
-              <img
+              <img className="hover:animate-bounce"
                 src={pokemon?.sprites.other["official-artwork"].front_default}
                 alt=""
               />
@@ -65,49 +65,49 @@ const PokemonId = () => {
               <h2 className="capitalize font-bold text-center text-2xl underline-offset-8">{pokemon?.name}</h2>
               <hr />
             </div>
-            <div className="flex justify-center text-center font-bold  gap-6 ">
-              <div className="">
+            <div className="flex justify-center text-center font-extrabold text-xl gap-6 ">
+              <div >
                 <h5>Weight</h5>
                 <span>{pokemon?.weight}</span>
               </div>
-              <div className="">
+              <div >
                 <h5>Height</h5>
                 <span>{pokemon?.height}</span>
               </div>
             </div>
-            <section className="grid md:first-line:grid-cols-2 text-center   gap-4">
+            <section className="grid md:first-line:grid-cols-2 text-center gap-4">
               {/*tipos*/}
               <section className="text-center">
-                <h3>Types</h3>
+                <h3 className="font-extrabold text-xl shadow-md  shadow-slate-900  mx-4">Types</h3>
                 <section className="grid grid-cols-2 gap-4 mt-4">
-                  {pokemon?.types.map((type) => (<article className="p-2 px-8 border-[1px] border-gray-300 capitalize"key={type.type.name}>{type.type.name}</article>))
+                  {pokemon?.types.map((type) => (<article className="p-2 px-8 border-[1px] border-gray-300 capitalize shadow-md  shadow-slate-900  mx-4 "key={type.type.name}>{type.type.name}</article>))
                   }
                 </section>
               </section>
-              <section className="text-center">
-                <h3>Abilities</h3>
-                <section className="grid grid-cols-1 gap-4 mt-4">
+              <section className="text-center grid grid-rows-1 right-10 items-center ">
+                <h3 className=" shadow-md  shadow-slate-900 w-auto mx-24 font-extrabold text-xl ">Abilities</h3>
+                <section className="grid grid-cols-1 gap-4 mt-4 ">
                   {pokemon?.abilities.map((ability) => (
-                    <article className="p-2 px-8 border-[1px] border-gray-400 capitalize "key={ability.ability.name}> {ability.ability.name}</article>))
+                    <article className=" shadow-md  shadow-slate-900  mx-6 p-2 px-8 mb-2 border-[1px] border-gray-400 capitalize "key={ability.ability.name}> {ability.ability.name}</article>))
                   }
                 </section>
               </section>
             </section>
           </section>
           <section>
-            <h2>Stats</h2>
+            <h2 className="font-extrabold text-xl">Stats</h2>
             <section className="capitalize">
               {pokemon?.stats.map((stat) => (
                 <article key={stat.stat.name}>
                   <section className="flex justify-between">
                     <h5 className="Capitalize">{stat.stat.name}</h5>
-                    <span>{stat.base_stat}/255</span>
+                    <span>{stat.base_stat}/150</span>
                   </section>
                   <div className="bg-gray-100 h-6 roundes-md">
                     <div
                       style={{ width: getPercentStatBar(stat.base_stat) }}
-                      className={`h-full bg-gradient-to-r bg-yellow-300 to-yellow-500`}
-                    ></div>
+                      className={`h-full bg-gradient-to-r bg-yellow-300 to-yellow-500 hover:animate-bounce`}
+                    >%</div>
                   </div>
                 </article>
               ))}
