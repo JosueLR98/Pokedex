@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const bordersByType = {
-  name: "border-gray-300",
+  grass: "border-gray-300",
   fire: "border-red-300",
   water: "border-blue-300",
   bug: "border-green-300",
@@ -20,6 +20,7 @@ const bordersByType = {
   ice :"border-blue-100",
   rock :"border-gray-300",
   ghost :"border-purple-300",
+  fairy: "border-purple-300 to-green-100"
   
 }
 const textByType = {
@@ -38,8 +39,9 @@ const textByType = {
   dragon :"text-yellow-400",
   ground:"text-yellow-400",
   ice :"text-blue-300",
-  rock :"text-gray-400",
+  rock :"text-gray-600",
   ghost :"text-purple-400",
+  fairy: "text-purple-300 "
   
 }
 
@@ -59,8 +61,9 @@ const backgroundByType = {
   dragon :"from-yellow-500 to-yellow-100",
   ground:"from-yellow-300 to-yellow-200",
   ice :"from-blue-100 to-black",
-  rock :"from-gray-300 to-gray-100 ",
+  rock :"from-gray-400 to-gray-100 ",
   ghost :"from-purple-300 to-purple-300",
+  fairy: "from-purple-300 to-green-100"
  
 }
 const PokemonCard = ({ pokemonUlr }) => {
@@ -77,7 +80,7 @@ const PokemonCard = ({ pokemonUlr }) => {
     <Link to={`/pokedex/${pokemon?.id}`} className={`text-center border-8 rounded-md mx-2 hover:scale-[1.1] m-2
      ${bordersByType[pokemon?.types[0].type.name]}` }>
       {/* Parte superior*/}
-      <section className={`h-[150px] relative bg-gradient-to-b ${backgroundByType[pokemon?.types[0].type.name]}` }>
+      <section className={` h-[150px] relative bg-gradient-to-b ${backgroundByType[pokemon?.types[0].type.name]}` }>
         <div className="absolute  -bottom-  w-[200px] left-1/2 -translate-x-1/2">
           <img src={pokemon?.sprites.other["official-artwork"].front_default}
            alt="" />
