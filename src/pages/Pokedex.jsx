@@ -147,7 +147,7 @@ const Pokedex = () => {
           <li
             onClick={() => setCurentPage(numberpage)}
             className={`p-3 rounded-md border-red-400 border-2 cursor-pointer font-bold ${
-              numberpage === currentPage && "bg-red-500"
+              numberpage === currentPage ? "bg-red-500": 'border-r-red-400'
             }`}
             key={numberpage}
           >
